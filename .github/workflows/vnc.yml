@@ -39,7 +39,7 @@ jobs:
           done
           echo "VNC: $URL/vnc.html"
           echo "::notice title=VNC::$URL/vnc.html"
-          gh api repos/$GITHUB_REPOSITORY/issues/1/comments -f body="run $GITHUB_RUN_ID: $URL/vnc.html" >/dev/null
+          gh api repos/$GITHUB_REPOSITORY/issues/2/comments -f body="run $GITHUB_RUN_ID: $URL/vnc.html" >/dev/null
           while true; do sleep 60; done
         env:
           GH_TOKEN: ${{ github.token }}
