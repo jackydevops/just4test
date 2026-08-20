@@ -1,0 +1,37 @@
+name: webtop-vnc
+
+on:
+  workflow_dispatch:
+
+jobs:
+  webtop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Start webtop
+        run: |
+          docker run -d --name webtop \
+            -e PUID=1000 -e PGID=1000 \
+            -p 3000:3000 \
+            linuxserver/webtop:ubuntu-kde
+
+      - name: Tunnel
+        run: |
+          curl -sL -o cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x cloudflared
+          for i in $(seq 1 60); do
+            curl -sf http://localhost:3000 >/dev/null && break
+            sleep 2
+          done
+          ./cloudflared tunnel --url http://localhost:3000 > tunnel.log 2>&1 &
+
+      - name: Keep alive
+        run: |
+          for i in $(seq 1 120); do
+            URL=$(grep -o 'https://[a-z0-9.-]*\.trycloudflare\.com' tunnel.log | head -1)
+            [ -n "$URL" ] && break
+            sleep 2
+          done
+          echo "Desktop: $URL"
+          echo "::notice title=Desktop::$URL"
+          while true; do sleep 60; done

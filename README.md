@@ -1,9 +1,13 @@
 # just4test
 
-Test CI/CD playground. Ubuntu runner + VNC qua browser.
+Test CI/CD playground. Desktop qua browser.
 
-## Dùng
+## webtop-vnc (nhanh)
 
-1. Actions → `ubuntu-vnc` → Run workflow
-2. Mở log bước `Keep alive` → copy URL `https://xxx.trycloudflare.com/vnc.html`
-3. VNC bằng trình duyệt. Job tự chết sau 6h.
+1. Actions → `webtop-vnc` → Run workflow
+2. ~2 phút sau mở log bước `Keep alive` → copy URL `https://xxx.trycloudflare.com`
+3. KDE full desktop chạy thẳng trên browser. Job tự chết sau 6h.
+
+## ubuntu-vnc (chậm, GNOME thật)
+
+Install Ubuntu desktop trên runner. Actions → `ubuntu-vnc` → Run workflow.
