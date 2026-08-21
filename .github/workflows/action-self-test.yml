@@ -1,0 +1,31 @@
+name: action-self-test
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run MT5 backtest action
+        id: bt
+        uses: thodinh/mt5-backtest@v1
+        with:
+          ea: BtcRapidTest.ex5
+          symbol: BTCUSDm
+          period: M1
+          from: 2026.01.01
+          to: 2026.01.02
+          mt5-login: ${{ secrets.MT5_LOGIN }}
+          mt5-password: ${{ secrets.MT5_PASSWORD }}
+          mt5-server: ${{ secrets.MT5_SERVER }}
+
+      - name: Show outputs
+        run: |
+          echo "report=${{ steps.bt.outputs.report }}"
+          echo "balance=${{ steps.bt.outputs.balance }}"
+          echo "deals=${{ steps.bt.outputs.deals }}"
+          echo "passed=${{ steps.bt.outputs.passed }}"
