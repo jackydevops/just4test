@@ -36,7 +36,6 @@ jobs:
           done
           echo "Desktop: $URL"
           echo "::notice title=Desktop::$URL"
-          gh api repos/$GITHUB_REPOSITORY/issues/2/comments -f body="run $GITHUB_RUN_ID: $URL" >/dev/null
           while true; do sleep 60; done
         env:
           GH_TOKEN: ${{ github.token }}
