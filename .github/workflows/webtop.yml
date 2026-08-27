@@ -37,5 +37,4 @@ jobs:
           echo "Desktop: $URL"
           echo "::notice title=Desktop::$URL"
           while true; do sleep 60; done
-        env:
-          GH_TOKEN: ${{ github.token }}
+
